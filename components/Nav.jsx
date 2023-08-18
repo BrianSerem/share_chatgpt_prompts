@@ -92,6 +92,19 @@ const Nav = () => {
                                     onClick={() => setToggleDropdown(flase)}>
                                     My Profile
                                 </Link>
+                                <Link
+                                    rel="stylesheet"
+                                    href="/create post"
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDropdown(flase)}>
+                                    Create Post
+                                </Link>
+                                <button
+                                    className="black_btn"
+                                    type="button"
+                                    onClick={() => { setToggleDropdown(false); signOut(); }}>
+                                    Sign Out
+                                </button>
                             </div>)}
                     </div>
                 ) : (
