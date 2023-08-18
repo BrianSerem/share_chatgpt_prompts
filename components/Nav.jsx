@@ -6,20 +6,17 @@ import { signIn, signOut, getProviders, useSession } from 'next-auth/react'
 
 
 const Nav = () => {
-    const isUserLoggedIn = true;
+    const { data: session } = useSession()
 
     const [providers, setProviders] = useState(null);
     const [toggleDropdown, setToggleDropdown] = useState(false)
 
     useEffect(() => {
-        const setUserProviders = async () => {
-            const response = await getProviders()
-
-            setProviders(response)
-        }
-        setUserProviders()
-
-    }, [])
+        (async () => {
+            const res = await getProviders();
+            setProviders(res);
+        })();
+    }, []);
 
     return (
         <nav className="flex-between w-full mb-16 pt-3">
@@ -34,7 +31,7 @@ const Nav = () => {
 
             {/* { Desktop Navigation } */}
             <div className="sm:flex hidden">
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className="flex gap-3 md:gap-5">
                         <Link
                             href='/create-prompt'
@@ -51,7 +48,7 @@ const Nav = () => {
                         <Link href='/profile'>
                             <Image
                                 className="rounded-full"
-                                src='/assets/images/logo.svg'
+                                src={ session?.user.image}
                                 width={37} height={37}
                                 alt='promptopia user profile image' />
                         </Link>
@@ -73,7 +70,7 @@ const Nav = () => {
             </div>
             {/* {Mobile Navigation} */}
             <div className="sm:hidden flex relative">
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className="flex">
                         <Image
                             className="rounded-full"
