@@ -4,7 +4,7 @@ const Home = () => {
             <h1 className="head_text text-center" > Discover and Share
                 <br className="max-hd:hidden" />
                 <span className="orange_gradient text-center ">
-                    AI Powered Prompts
+                    AI-Powered Prompts
                 </span>
             </h1>
         </section>
