@@ -2,13 +2,15 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Profile from '@components/profile'
+import { useRouter } from 'next/navigation'
 
 
 const MyProfile = () => {
 
     const { data: session } = useSession();
     const [prompts, setPrompts] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
 
@@ -42,16 +44,7 @@ const MyProfile = () => {
 
     const handleEdit =  ( prompt) => {
 
-        // try {
-        //     const response = await fetch(`/api/prompt/${prompt._id}`, {
-        //         method: 'delete'
-        //     })
-        //     const newPrompts = prompts.filter((eachPrompt) => eachPrompt._id !== prompt._id)
-        //     setPrompts(newPrompts)
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        router.push(`/update-prompt/${prompt._id}`)
 
     }
 
