@@ -10,14 +10,13 @@ export const GET = async () => {
 
         return new Response(
          JSON.stringify(prompts), {
-            status: '200'
+            status: 200
          }
         )
 
     } catch (error) {
         return new Response('Failed to fetch prompts', {
-            status: '500'
-        });
+            status: 500 })
     }
 
 }

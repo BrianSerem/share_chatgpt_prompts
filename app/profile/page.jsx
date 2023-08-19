@@ -16,7 +16,6 @@ const MyProfile = () => {
 
             const response = await fetch(`/api/users/${session?.user.id}/posts`);
             const prompts = await response.json()
-            console.log(prompts)
 
             setPrompts(prompts)
             setIsLoading(false)
@@ -25,13 +24,34 @@ const MyProfile = () => {
         if (session?.user.id) { fetchPrompts() }
     }, [])
 
-    const handleDelete = async () => {
+    const handleDelete = async (prompt) => {
+        try {
+            const response = await fetch(`/api/prompt/${prompt._id}`, {
+                method: 'delete'
+            })
+            const newPrompts = prompts.filter((eachPrompt) => eachPrompt._id !== prompt._id)
+            setPrompts(newPrompts)
+
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
 
 
-    const handleEdit = () => {
+    const handleEdit =  ( prompt) => {
+
+        // try {
+        //     const response = await fetch(`/api/prompt/${prompt._id}`, {
+        //         method: 'delete'
+        //     })
+        //     const newPrompts = prompts.filter((eachPrompt) => eachPrompt._id !== prompt._id)
+        //     setPrompts(newPrompts)
+
+        // } catch (error) {
+        //     console.log(error)
+        // }
 
     }
 
