@@ -22,7 +22,7 @@ const CreatePromptPage = () => {
 
         try {
             const response = await fetch('/api/prompt/new', {
-                method: 'post',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'Application/json'
                 },
