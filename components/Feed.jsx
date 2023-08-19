@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import PromptCard from './PromptCard';
+import LoadingPage from '@app/loading';
 
 const PromptCardList = ({ data, handleTagClick }) => {
 
@@ -21,6 +22,7 @@ const Feed = () => {
 
   const [searchText, setSearchText] = useState('');
   const [prompts, setPrompts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
 
@@ -28,6 +30,7 @@ const Feed = () => {
       const response = await fetch('/api/prompt');
       const prompts = await response.json()
       setPrompts(prompts)
+      setIsLoading(false)
 
     }
     fetchPrompts()
@@ -36,6 +39,8 @@ const Feed = () => {
   const handleSearchChange = (e) => {
 
   }
+
+
   return (
     <section className='feed'>
       <form className='relative  w-full flex-center'>
@@ -48,6 +53,7 @@ const Feed = () => {
           required
         />
       </form>
+      {isLoading && (<LoadingPage />)}
       < PromptCardList handleTagClick={() => { }} data={prompts} />
     </section>
   )

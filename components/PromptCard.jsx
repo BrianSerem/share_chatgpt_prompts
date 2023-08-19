@@ -7,9 +7,13 @@ import { usePathName, useRouter } from 'next/navigation'
 
 const PromptCard = ({ prompt, handleTagClick, handleDelete, handleEdit }) => {
 
-    const [copied, setCopied] = useState();
+    const [copied, setCopied] = useState('');
 
-    console.log(prompt)
+    const handleCopy = () => {
+        setCopied(prompt.prompt)
+        navigator.clipboard.writeText(prompt.prompt)
+        setTimeout(() => setCopied(''), 3000)
+    }
 
     return (
         <div className='prompt_card'>
@@ -33,16 +37,20 @@ const PromptCard = ({ prompt, handleTagClick, handleDelete, handleEdit }) => {
                 </div>
                 <div className="copy_btn">
                     <Image
-                        onClick = {() => {}}
-                        src={copied ? ('/assets/icons/tick.svg') : ('/assets/icons/copy.svg')}
+                        onClick={() => { handleCopy() }}
+                        src={copied ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg'}
                         width={10}
                         height={10}
                         alt='copy prompt'
                     />
                 </div>
             </div>
-            <p className='my-4 font-satoshi text-sm text-gray-700'> { prompt.prompt }</p>
-            <p className='font-inter text-sm blue_gradient cursor-pointer' >{ prompt.tag } </p>
+            <p className='my-4 font-satoshi text-sm text-gray-700'> {prompt.prompt}</p>
+            <p className='font-inter text-sm blue_gradient cursor-pointer'
+                onClick={() => { handleTagClick && handleTagClick(prompt.tag) }}>
+                {prompt.tag}
+
+            </p>
         </div>
     )
 }
