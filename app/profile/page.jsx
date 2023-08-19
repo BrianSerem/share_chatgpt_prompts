@@ -27,22 +27,31 @@ const MyProfile = () => {
     }, [])
 
     const handleDelete = async (prompt) => {
-        try {
-            const response = await fetch(`/api/prompt/${prompt._id}`, {
-                method: 'delete'
-            })
-            const newPrompts = prompts.filter((eachPrompt) => eachPrompt._id !== prompt._id)
-            setPrompts(newPrompts)
 
-        } catch (error) {
-            console.log(error)
+        const hasConfirmedDelete = confirm('Are you sure you want to delete this prompt?')
+
+        if (hasConfirmedDelete) {
+
+            try {
+                await fetch(`/api/prompt/${prompt._id}`, {
+                    method: 'delete'
+                })
+                const newPrompts = prompts.filter((eachPrompt) => eachPrompt._id !== prompt._id)
+                setPrompts(newPrompts)
+
+            } catch (error) {
+                console.log(error)
+            }
+
         }
+
+
 
     }
 
 
 
-    const handleEdit =  ( prompt) => {
+    const handleEdit = (prompt) => {
 
         router.push(`/update-prompt/?id=${prompt._id}`)
 
