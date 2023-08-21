@@ -84,9 +84,8 @@ const Feed = () => {
         />
       </form>
       {/* All prompts */}
-      
-      {isLoading && (<LoadingPage />)}
-      < PromptCardList handleTagClick={handleTagClick} data={allPrompts} />
+      { isLoading ? (<LoadingPage /> ): searchText? < PromptCardList handleTagClick={handleTagClick} data={searchedResults} /> : < PromptCardList handleTagClick={handleTagClick} data={allPrompts} />}
+
     </section>
   )
 }
