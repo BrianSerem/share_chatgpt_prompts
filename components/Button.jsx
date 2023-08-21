@@ -1,7 +1,7 @@
 'use client'
 import Router, { useRouter } from "next/navigation"
 
-const Button = ( {desc}) => {
+const Button = ( {desc, type}) => {
     const router = useRouter()
 
     const signInButtonClick = () => {
@@ -11,15 +11,11 @@ const Button = ( {desc}) => {
     return (
         <button
             className="black_btn"
-            type='button'
+            type={type}
             onClick={signInButtonClick }>
             {desc}
         </button>
     )
 }
-
-Button.defaultProps = {
-    desc: 'Sign In'
-  }
 
 export default Button

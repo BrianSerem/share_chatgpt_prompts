@@ -70,7 +70,7 @@ const Nav = () => {
                                 </button>
 
                             ))}
-                            <Button />
+                            <Button desc='Email'/>
                         </>
                     )}
             </div>
@@ -121,7 +121,7 @@ const Nav = () => {
                                 Google
                             </button>
                         ))}
-                        <Button />
+                        <Button  desc='Email'/>
                     </>
                 )}
             </div>
