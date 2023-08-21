@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Form from '@components/Form'
+import Button from '@components/Button'
 
 const CreatePromptPage = () => {
 
@@ -32,29 +33,37 @@ const CreatePromptPage = () => {
                     tag: post.tag
                 })
             })
-        if (response.ok) {
-            router.push('/');
+            if (response.ok) {
+                router.push('/');
+            }
         }
-    }
         catch (error) {
-        console.log(error)
+            console.log(error)
+        }
+        finally {
+            setSubmitForm(false)
+        }
+
     }
-    finally {
-        setSubmitForm(false)
+    if (!session) {
+
+        return (
+            <>
+                <p> You must be logged in to operate on this page</p>
+                < Button />
+            </>
+        )
     }
 
-}
-
-
-return (
-    < Form
-        type='Create'
-        post={post}
-        setPost={setPost}
-        submitting={submitForm}
-        handleSubmit={createPrompt}
-    />
-)
+    return (
+        < Form
+            type='Create'
+            post={post}
+            setPost={setPost}
+            submitting={submitForm}
+            handleSubmit={createPrompt}
+        />
+    )
 }
 
 export default CreatePromptPage

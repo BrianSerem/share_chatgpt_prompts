@@ -3,11 +3,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { signIn, signOut, getProviders, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import Button from "./Button"
+
 
 
 const Nav = () => {
     const { data: session } = useSession()
-
+    const router = useRouter()
     const [providers, setProviders] = useState(null);
     const [toggleDropdown, setToggleDropdown] = useState(false)
 
@@ -17,6 +20,7 @@ const Nav = () => {
             setProviders(res);
         })();
     }, []);
+
 
     return (
         <nav className="flex-between w-full mb-16 pt-3">
@@ -30,7 +34,7 @@ const Nav = () => {
             </Link>
 
             {/* { Desktop Navigation } */}
-            <div className="sm:flex hidden">
+            <div className="sm:flex hidden gap-3">
                 {session?.user ? (
                     <div className="flex gap-3 md:gap-5">
                         <Link
@@ -48,7 +52,7 @@ const Nav = () => {
                         <Link href='/profile'>
                             <Image
                                 className="rounded-full"
-                                src={ session?.user.image}
+                                src={session?.user.image}
                                 width={37} height={37}
                                 alt='promptopia user profile image' />
                         </Link>
@@ -62,14 +66,16 @@ const Nav = () => {
                                     key={provider.name}
                                     type='button'
                                     onClick={() => signIn(provider.id)}>
-                                    {`Sign in with ${provider.name}`}
+                                    {provider.name}
                                 </button>
+
                             ))}
+                            <Button />
                         </>
                     )}
             </div>
             {/* {Mobile Navigation} */}
-            <div className="sm:hidden flex relative">
+            <div className="sm:hidden flex relative gap-2" >
                 {session?.user ? (
                     <div className="flex">
                         <Image
@@ -112,9 +118,10 @@ const Nav = () => {
                                 key={provider.name}
                                 type='button'
                                 onClick={() => signIn(provider.id)}>
-                                Sign In
+                                Google
                             </button>
                         ))}
+                        <Button />
                     </>
                 )}
             </div>

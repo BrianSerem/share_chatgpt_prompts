@@ -2,11 +2,13 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Form from '@components/Form'
+import { useSession } from 'next-auth/react'
+import Button from '@components/Button'
 
 const UpdatePromptPage = () => {
 
   const pathName = usePathname()
-
+  const {data : session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams()
   const promptId = searchParams.get('id')
@@ -68,7 +70,15 @@ const UpdatePromptPage = () => {
 
   }
 
+  if (!session) {
 
+    return (
+      <>
+        <p> You must be logged in to operate on this page</p>
+        < Button />
+      </>
+    )
+  }
   return (
     < Form
       type='Edit'
