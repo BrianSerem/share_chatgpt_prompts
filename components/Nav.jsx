@@ -74,7 +74,7 @@ const Nav = () => {
                     <div className="flex">
                         <Image
                             className="rounded-full"
-                            src='/assets/images/logo.svg'
+                            src={session?.user.image}
                             width={37}
                             height={37}
                             alt='promptopia user profile image'

@@ -25,6 +25,8 @@ const PromptCard = ({ prompt, handleEdit, handleDelete, handleTagClick }) => {
     setTimeout(() => setCopied(false), 3000);
   };
 
+
+
   return (
     <div className='prompt_card'>
       <div className='flex justify-between items-start gap-5'>

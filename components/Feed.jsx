@@ -7,41 +7,68 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
   return (
     <div className="mt-16 layout">
-     {data.map((prompt) => (
-      < PromptCard
-      key={prompt._id}
-      prompt={prompt}
-      handleTagClick = {handleTagClick}
-      />
-     ))}
+      {data.map((prompt) => (
+        < PromptCard
+          key={prompt._id}
+          prompt={prompt}
+          handleTagClick={handleTagClick}
+        />
+      ))}
     </div>
   )
 }
 
 const Feed = () => {
 
-  const [searchText, setSearchText] = useState('');
-  const [prompts, setPrompts] = useState([]);
+  // Search states
+  const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
+
+
+  const [allPrompts, setAllPrompts] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
 
     const fetchPrompts = async () => {
       const response = await fetch('/api/prompt');
-      const prompts = await response.json()
-      setPrompts(prompts)
+      const data = await response.json()
+      setAllPrompts(data)
       setIsLoading(false)
 
     }
     fetchPrompts()
-  }, [])
+  }, []);
+  const filterPrompts = (searchtext) => {
+    const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
+    return allPrompts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    );
+  };
 
   const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
 
-    e.preventDefault()
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
 
+  const handleTagClick = (tagName) => {
+    setSearchText(tagName);
 
-  }
+    const searchResult = filterPrompts(tagName);
+    setSearchedResults(searchResult);
+  };
 
 
   return (
@@ -52,12 +79,14 @@ const Feed = () => {
           type='text'
           value={searchText}
           placeholder='search by username or tag'
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={handleSearchChange}
           required
         />
       </form>
+      {/* All prompts */}
+      
       {isLoading && (<LoadingPage />)}
-      < PromptCardList handleTagClick={() => { }} data={prompts} />
+      < PromptCardList handleTagClick={handleTagClick} data={allPrompts} />
     </section>
   )
 }
