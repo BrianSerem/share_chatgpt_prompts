@@ -6,12 +6,11 @@ import Form from '@components/Form'
 const UpdatePromptPage = () => {
 
   const pathName = usePathname()
-  console.log(pathName)
 
   const router = useRouter();
   const searchParams = useSearchParams()
   const promptId = searchParams.get('id')
-  console.log(promptId)
+
 
   const [submitForm, setSubmitForm] = useState(false);
   const [post, setPost] = useState({

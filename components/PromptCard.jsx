@@ -13,7 +13,6 @@ const PromptCard = ({ prompt, handleEdit, handleDelete, handleTagClick }) => {
   const [copied, setCopied] = useState("");
 
   const handleProfileClick = () => {
-    console.log(prompt);
 
     if (prompt.creator._id === session?.user.id) return router.push("/profile");
 
