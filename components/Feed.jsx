@@ -38,6 +38,9 @@ const Feed = () => {
 
   const handleSearchChange = (e) => {
 
+    e.preventDefault()
+
+
   }
 
 
@@ -47,9 +50,9 @@ const Feed = () => {
         <input
           className='search_input peer'
           type='text'
-          placeholder='search by username or tag'
           value={searchText}
-          onChange={handleSearchChange}
+          placeholder='search by username or tag'
+          onChange={(e) => setSearchText(e.target.value)}
           required
         />
       </form>
