@@ -39,6 +39,9 @@ const handler = NextAuth({
       }
     })
   ],
+  pages: {
+    signIn: '/sign-in'
+  },
   callbacks: {
     async session({ session }) {
       // store the user id from MongoDB to session
